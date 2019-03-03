@@ -1,0 +1,84 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 10
+  longitude: 106
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: UTC
+  # Customization file
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+# Show the introduction message on startup.
+#introduction:
+discovery:
+ios:
+hassio:
+# Homekit Apple
+homekit:
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+
+  - platform: broadlink
+    scan_interval: 2
+    host: 192.168.1.30
+    mac: 'b4:43:0d:c7:61:5f'
+    monitored_conditions: 
+      - temperature
+      - humidity
+      - air_quality
+      - light
+      - noise
+
+switch:
+  - platform: broadlink
+    host: 192.168.1.22
+    mac: 'b4:43:0d:c7:39:99'
+    timeout: 15
+    switches:
+      # Will work on Font Door:
+      cuacuon:
+        friendly_name: "Front Door"
+        command_on: 'sgiEAxsNGw0bDRsOGw0bDRsNGw4aDhoOGw0OGhsNGw4aDg4aGw0bDg0bGg4bDQ4aGw0OGw0bGg4bDRsNGw0OGg4bGg4OGg4aDhsNGw0bDhobDQ4aDhoOGxsNDRsOGhsOGg4aDg4aGw0OGw0bDhobDQ4aGw0OGhsOGg4OGhsNGw4aDhwAAikODQ0ODg0ODg0NDg4NDg0ODQ4ODQ4NDoQaDRsOGg4bDRsNGw4aDhsNGw0bDRsOGg0bDg0bGw0bDRsODRsbDRsNDhobDRsODRsaDg4aDhobDhoOGw0bDQ4aDhobDg4aDRsOGg4aDhsNGxsNDhoOGg4aGw0OGw0bGw0bDRsNDhsaDg4aDhoOGhsODRocDQ4aGw0bDg0bGg4bDRsNHAACKQ4ODQ4NDQ4ODQ4NDg4NDg0ODQ4ODQ4NhBoOGg4bDRsNGw4aDhoOGw0bDRsOGg4bDRsNDhobDhoOGg4NGxsNGw0OGxoOGg4OGhsNDhsNGxoOGw0bDRsNDhsOGhsNDRsOGg4bDRoOGw4aGw0OGg4bDRsaDg4aDhobDhoOGg4OGhsNDhoOGw0bGg4NGxsNDhsaDhsNDRsbDRsNGw0dAAIpDQ0ODg4NDQ4ODQ4NDg4NDg0ODQ4NDg6DGw0bDRsOGg4bDRoOGw0bDRsOGg4bDRsNGw0OGxoOGw0bDQ4aGw4aDg0bGg4bDQ4aGw4NGw0bGg4bDRsNHA0NGw0bGw0OGg4bDRsNGw4aDhobDg0aDhsNGxsNDhoOGhsOGg4aDg4aGw0OGw0bDRsbDQ4aGw0OGhsOGg4OGhsOGg0cDRwAAikNDg4NDQ4ODQ4NDg0ODQ4ODQ4NDg4NDYQbDRsNGw4aDhoOGw0bDRsNGw4bDRsNGw0bDg0bGg4bDRsNDhsaDhoODRsbDRsNDhsaDg4aDhobDRsNGw0bDg0bDhobDQ4bDRoOGw0bDhoOGhsODRsNGw0bGw0OGg4aGw4aDhsNDhobDg0bDRsNGxsNDhobDQ4aGw4bDQ4aGw0bDhoOHAACKQ4NDg0ODQ4NDg4NDg0ODQ4NDg4NDg0OgxsOGg0bDRsOGw0bDRsNGw4bDRsNGw0bDRsODRsaDhsNGw0OGhsOGg4NGxsNGw0OGhsNDhsOGhsNGw0bDhoODRsOGhsNDhoOGw0bDRsNGw4aGw0OGw0bDhobDQ4aDhobDhoOGw0OGhsNDhoOGw0bGwAF3AAAAAA='
+        command_off: 'sgOEAw0cGw0bDg4bDRsOGxsOGw4NHBoOGw4NGxwNDRwNHBsNGw4bDRwODRsOGxsNDhsOGw0bDhsOGw4bGw4NGw0cDRsbDg4bDRwbDRwNGw4NHBsNDhsNHA0bHA0OGxsODRsbDg0cGw0bDg4bGw4cAAIqDQ4NDQ4ODQ4NDg0ODg0ODQ4NDg4NDg2EGw4bDRsOGw4bDRsOGw4bDRsOGw4bDhsODRsbDhsNDhsOGw0cGw0bDg4bGw4bDQ4bGw4NGw4bGw4bDRwNGw4NHA0bGw4OGw0cDRsOGw0cDRwaDg4bDRwNGxsODRwNGxsOGw4bDQ4bGw4NHA0bDhsbDg0bGw4OGxsODRwaDhsODRwaDhwAAioNDg0ODg0ODQ4NDg4NDg0ODQ4NDg0ODYQbDhsOGw0cDRsOGw4bDhoOGw4bDRwNGw4NGxsOGw4OGw0bDhsbDhsODRsbDhsODRsbDg0cDRsbDhsOGw4bDg0bDRwbDQ4bDhsOGw0cDRsOGxsNDhsOGw0cGg4OGw0cGw4aDhsODRwbDg0bDRwNGxwNDhsbDg0bGw4OGxsNHA0NHBsNHQACKQ4ODQ0ODg0ODQ4NDg0ODg4NDQ4ODQ4NhBsOGw0bDhsOGw0bDhsOGw4bDRsOGw4bDg0bGw4bDg0bDhsNHBsNGw4OGxsNHA0NHBsODRsOGxsOGw0cDhoODRwNGxsODRwNHA0bDhsNHA0bGw4NHA0bDhsbDg0cDRsbDhsOGw0OGxsODRsOGw0cGw4NGxsODhsbDg0bGw4bDQ4cGg4dAAIpDQ4NDg0ODg0ODQ4ODQ4NDg0ODQ4NDg2EHA0bDhsNHA0bDhsOGw0bDhsOGw0cDhoODRwbDRwNDhsNHA0bGw4bDg0bGw4bDg0bGw4NHA0bHA0bDhsOGw0OGw4bGw0OGw4bDRwNGw4bDhsbDg0bDhsOGxsNDhsNHBsNHA0bDg0cGw4NGw4bDRwbDQ4bGw4NHBoODhsbDhsNDhsbDhwAAikODg0ODQ4NDg0ODQ4ODQ4ODQ0ODg0ODYQbDhsNGw4bDhsOGw0bDhsOGw0bDhsOGw0OGxsOGw4NHA0bDRwbDhsNDhsbDhsNDhsbDg0cDRsbDhsOGw0bDg0cDRscDQ4bDRwNGw4bDRwNHBoODhsNHA0cGg4NHA0bGw4bDhsNDhsbDg0cDRsOGxsODRwbDQ4bGw4NGxsOGw4NGxwNHAAF3AAAAAA='
+ #Bedroom light
+  - platform: broadlink
+    host: 192.168.1.39
+    mac: 'b4:43:0d:b0:88:00'
+    type: sp3
+    scan_interval: 3
+    friendly_name: "Bed light"
+
+  #Garden 
+  - platform: broadlink
+    host: 192.168.1.31
+    mac: '78:0f:77:61:2e:00'
+    type: sp3
+    scan_interval: 3
+    friendly_name: "Garden switch"
+# Text to speech
+tts:
+  - platform: google
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://hassio.local:3218
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
